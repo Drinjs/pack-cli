@@ -3,7 +3,7 @@ const Config = require('./Config')
 class WebpackConfig extends Config {
     constructor(item) {
         super('webpack', item)
-        this._webpackConfig = {}
+        this._webpackConfig = item
     }
 
     get webpackConfig() {
@@ -11,8 +11,13 @@ class WebpackConfig extends Config {
     }
 
     set webpackConfig(item) {
-        this.options = item
-        this._webpackConfig[item.type] = item.value
+        // this.options = item
+        const oldValue = this._webpackConfig[item.type]
+        if(oldValue && Object.prototype.toString.call(oldValue) === '[object Object]') {
+            this._webpackConfig[item.type] = { ...oldValue , ...item.value}
+        } else {
+            this._webpackConfig[item.type] = item.value
+        }
     }
 }
 

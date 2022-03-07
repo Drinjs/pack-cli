@@ -1,26 +1,18 @@
 const chalk = require('chalk') 
+const ora = require('ora')
+
 class PackHanlder {
-    constructor(msg, type) {
-        this.msg = msg
-        this.type = type
+    static errorHandler(msg) {
+        console.log(chalk.red('Error packer: ', msg))
     }
 
-    errorHandler() {
-        console.log(chalk.red('Error packer: ', this.msg))
+    static warnHandler(msg) {
+        console.warn(chalk.orange('Warn packer: ', msg))
     }
 
-    warnHandler() {
-        console.warn(chalk.orange('Warn packer: ', this.msg))
-    }
-
-    handler() {
-        if(this.type === 'error') {
-            this.errorHandler()
-        }
-
-        if(this.type === 'warn') {
-            this.warnHandler()
-        }
+    static oraHandler(plugins) {
+        const spinner = ora(`Building module: ${plugins.toString() || 'All Modules'}\n`).start()
+        return spinner
     }
 }
 

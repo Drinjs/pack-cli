@@ -1,9 +1,9 @@
 const WebpackConfig = require('../config/WebpackConfig')
-
+const webpackBaseConfig = require('./config/webpackBaseConfig')
 class SingletonWebpackFactroy extends WebpackConfig {
     constructor() {
       if (!SingletonWebpackFactroy.instance) {
-        super()
+        super(webpackBaseConfig)
         SingletonWebpackFactroy.instance = this;
       }
       return SingletonWebpackFactroy.instance;

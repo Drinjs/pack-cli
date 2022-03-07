@@ -4,7 +4,7 @@ const SingletonWebpackFactroy = require('../factory/WebpackFactory')
 class WatchConfig extends Config {
     constructor(item) {
         super('watch', item);
-        this._webpackConfig = null
+        this.watchConfig = null
     }
 
     get webpackConfig() {
@@ -14,7 +14,6 @@ class WatchConfig extends Config {
     set webpackConfig(item) {
         // 开启watch模式
         if(this.config) {
-            debugger
             const webpackInstance = new SingletonWebpackFactroy()
             webpackInstance.webpackConfig = item
         }

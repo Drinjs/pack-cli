@@ -1,7 +1,7 @@
 const WatchConfig = require('../config/WatchConfig')
 const ExternalConfig = require('../config/ExternalConfig')
 const PluginConfig = require('../config/PluginConfig')
-const WebapckConfig = require('../config/WebpackConfig')
+const WebpackFactory = require('./WebpackFactory')
 
 const configMap = new Map()
 class ConfigFactory {
@@ -9,8 +9,7 @@ class ConfigFactory {
         configMap.set('watch', new WatchConfig())
         configMap.set('plugin', new PluginConfig())
         configMap.set('external', new ExternalConfig())
-        configMap.set('webpack', new WebapckConfig())
-        console.log('static configFactory: ', configMap)
+        configMap.set('webpack', new WebpackFactory())
     }
 
     static getConfig(type) {
@@ -18,7 +17,10 @@ class ConfigFactory {
     }
 
     static setConfig(type, item) {
-        const configInstance = configMap.get(type)
+        let configInstance = configMap.get(type)
+        if(!configInstance) {
+            configInstance = configMap.get('webpack')
+        }
         configInstance.config = item
         configInstance.webpackConfig = {
             type,
@@ -27,5 +29,4 @@ class ConfigFactory {
     }
 }
 
-console.log(ConfigFactory)
 module.exports = ConfigFactory
